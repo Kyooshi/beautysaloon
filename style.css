@@ -1,0 +1,647 @@
+/*====  RESET  ==========================================*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none; /*tirando os pontinhos que aparecem nas listas*/
+}
+a {
+  text-decoration: none; /*retira as decorações padrão da formatação*/
+}
+img {
+  width: 100%; /*largura 100% da página*/
+  height: auto; /*a autura vai respeitar a largura*/
+}
+/*====  VARIABLES  ==========================================*/
+:root {
+  --header-hight: 4.5rem;
+  --hue: 159;
+  /* HSL color mode */
+  --base-color: hsl(var(--hue) 36% 57%);
+  --base-color-second: hsl(var(--hue) 65% 88%);
+  --base-color-alt: hsl(var(--hue) 57% 53%);
+  --title-color: hsl(var(--hue) 41% 10%);
+  --text-color: hsl(0 0% 46%);
+  --text-color-light: hsl(0 0% 98%);
+  --body-color: hsl(0 0% 98%);
+  /*ao declarar --(nome) na raiz (root) eu posso acesar ela dentro de td meu código / para declarar uma variavel usa-se --(nome) / para usar uma variavel vc declara algo color: var(--(nome))*/
+
+  /*Fonts*/
+  --title-font-size: 1.875rem;
+  --subtitle-font-size: 1rem;
+
+  --title-font: 'Poppins', sans-serif;
+  --body-font: 'DM Sans', sans-serif;
+}
+/*====  BASE  ==========================================*/
+
+html {
+  scroll-behavior: smooth; /*faz a rolagem ficar suave*/
+}
+
+body {
+  font: 400 1rem var(--body-font);
+  color: var(--text-color);
+  background: var(--body-color);
+  -webkit-font-smoothing: antialiased; /*caso esteja habilitado no navegador, ira suavizar a letra*/
+} /* para usar uma variavel vc declara algo color: var(--(nome))*/
+
+.title {
+  font: 700 var(--title-font-size) var(--title-font);
+  color: var(--title-color);
+  -webkit-font-smoothing: auto;
+}
+
+.button {
+  background-color: var(--base-color);
+  color: var(--text-color-light);
+  height: 3.5rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 2rem;
+  border-radius: 0.25rem;
+  font: 500 1rem var(--body-font);
+  transition: background 0.3s;
+}
+
+.button:hover {
+  background: var(--base-color-alt);
+}
+
+.divider-1 {
+  height: 1px;
+  background: linear-gradient(
+    270deg,
+    hsla(var(--hue), 36%, 57%, 1),
+    hsla(var(--hue), 65%, 88%, 0.34)
+  );
+}
+
+.divider-2 {
+  height: 1px;
+  background: linear-gradient(
+    270deg,
+    hsla(var(--hue), 65%, 88%, 0.34),
+    hsla(var(--hue), 36%, 57%, 1)
+  );
+}
+
+/*====  LAYOUT  ==========================================*/
+.container {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+.grid {
+  display: grid;
+  gap: 2rem; /*32px/16px*/
+}
+/*Habilita a função "grade" e o "gap" vai deixar o espaçamento dos filhos dentro do grip (os divs que tem la) */
+
+.section {
+  padding: calc(5rem + var(--header-hight)) 0; /* 5rem (em cima e embaixo)  0 (lados)*/
+}
+
+.section .title {
+  margin-bottom: 1rem;
+}
+
+.section .subtitle {
+  font-size: var(--subtitle-font-size);
+}
+
+.section header {
+  margin-bottom: 4rem;
+}
+
+.section header strong {
+  color: var(--base-color);
+}
+#header {
+  border-bottom: 1px solid #e4e4e4; /*colocando uma borda só na parte de baixo de 1px solido dessa cor*/
+  margin-bottom: 2rem;
+  display: flex; /*se adapta a largura*/
+
+  width: 100%;
+  position: fixed; /*fixa ele durante a rolagem*/
+  top: 0;
+  left: 0;
+  z-index: 100; /*deixa acima de td o conteúdo*/
+  background: var(
+    --body-color
+  ); /*pinta todo o background para n aparecer o fundo*/
+}
+#header.scroll {
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1); /*eixoX eixoY blurr e cor*/
+}
+
+/*====  LOGO  ==========================================*/
+.logo {
+  font: 700 1.31rem var(--title-font);
+  color: var(--title-color);
+}
+
+.logo span {
+  color: var(--base-color);
+}
+
+.logo-alt span {
+  color: var(--body-color);
+}
+/*====  NAVIGATION  ==========================================*/
+nav {
+  height: var(--header-hight);
+  /*nesse caso, a altura do header vai ser de 72px, mas para o design responsivo é necessário pegar o 72px/16px(fonte padrão) = 4.5, rem diz respeito a responsividade, respeitar a proporção da tela*/
+  display: flex; /*todos os itens (filhos) dentro do nav (pai) vão obdecer o flex(ficar um do lado do outro)*/
+  align-items: center; /*irá alinhas os itens ao centro*/
+  justify-content: space-between; /*ele já esta dentro da class container e irá criar um espaçamento dos itens internos que preencha os 2 limites do container*/
+  width: 100%;
+}
+
+nav ul li {
+  text-align: center;
+  position: relative;
+}
+
+nav ul li a {
+  transition: color 0.2s; /*só haverá transição da cor*/
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  color: var(--base-color);
+}
+
+nav ul li a::after {
+  content: '';
+  width: 0%; /*não aparecer no começo, somente qnd hover*/
+  height: 2px;
+  background: var(--base-color);
+
+  position: absolute; /*relacionado ao anterior que seja relative no caso nav ul li{position:relative*/
+  left: 0;
+  bottom: -1.5rem;
+
+  transition: width 0.2s;
+}
+nav ul li a:hover::after,
+nav ul li a.active::after {
+  width: 100%;
+}
+
+nav .menu {
+  opacity: 0;
+  visibility: hidden;
+  top: -20rem;
+  transition: 0.2s;
+}
+
+nav .menu ul {
+  display: none;
+}
+
+/*====  SHOW MENU  ==========================================*/
+
+nav.show .menu {
+  opacity: 1;
+  visibility: visible;
+  background: var(--body-color);
+
+  height: 100vh; /*vh - viewport height - 100% da altura da tela atual*/
+  width: 100vw;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  display: grid; /*joga em grade e centraliza*/
+  place-content: center;
+}
+
+nav.show .menu ul {
+  display: grid;
+}
+
+nav.show ul.grid {
+  /*Quando está junto é da na msm linha, qnd tem espaço entre, está dentro (embaixo) dele*/
+  gap: 4rem;
+}
+
+/*toggle menu - funciona como uma switch de ligar e desligar a função*/
+
+.toggle {
+  color: var(--base-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+nav .icon-close {
+  visibility: hidden;
+  opacity: 0;
+
+  position: absolute;
+  top: -1.5rem;
+  right: 1.5rem;
+
+  transition: 0.2s;
+}
+
+nav.show div.icon-close {
+  visibility: visible;
+  opacity: 1;
+  top: 1.5rem;
+}
+
+/*====  HOME  ==========================================*/
+#home {
+  overflow: hidden; /*vai cortar tudo que está fora do ID Home*/
+}
+#home .container {
+  margin: 0;
+}
+
+#home .image {
+  position: relative;
+}
+
+#home .image::before {
+  content: '';
+  height: 100%;
+  width: 100%;
+  background: var(--base-color-second);
+  position: absolute;
+  top: -16.8%;
+  left: 16.7%;
+  z-index: 0;
+}
+/*constrói um 'elemento fantasma' antes da class image*/
+
+#home .image img {
+  position: relative; /*habilito propriedade de deslocamento*/
+  right: 2.93rem;
+}
+#home .image img,
+#home .image::before {
+  border-radius: 0.25rem;
+}
+
+#home .text {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  text-align: center;
+}
+
+#home .text h1 {
+  margin-bottom: 1rem;
+}
+
+#home .text p {
+  margin-bottom: 2rem;
+}
+/*====  ABOUT  ==========================================*/
+#about {
+  background: white;
+}
+#about .container {
+  margin: 0;
+}
+
+#about .image {
+  position: relative;
+}
+
+#about .image::before {
+  content: '';
+  height: 100%;
+  width: 100%;
+  background: var(--base-color-second);
+  position: absolute;
+  top: -8.3%;
+  left: -33%;
+  z-index: 0;
+}
+/*constrói um 'elemento fantasma' antes da class image*/
+
+#about .image img {
+  position: relative; /*habilito propriedade de deslocamento*/
+}
+#about .image img,
+#about .image::before {
+  border-radius: 0.25rem;
+}
+#about .text {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+/*====  SERVICES  ==========================================*/
+.cards .grid {
+  gap: 1.5rem;
+}
+
+.card {
+  padding: 3.625rem 2rem;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08);
+  border-bottom: 0.25rem solid var(--base-color);
+  border-radius: 0.25rem 0.25rem 0 0;
+  text-align: center;
+}
+
+.card i {
+  display: block;
+  margin-bottom: 1.5rem;
+  font-size: 5rem;
+  color: var(--base-color);
+}
+
+.card .title {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+/*====  TESTIMONIALS  ==========================================*/
+
+#testimonials {
+  background: white;
+}
+
+#testimonials .container {
+  margin-left: 0;
+  margin-right: 0;
+}
+#testimonials header {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  margin-bottom: 0;
+}
+
+#testimonials blockquote {
+  padding: 2rem;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 0.25rem;
+}
+
+#testimonials blockquote p {
+  position: relative;
+  text-indent: 1.875rem;
+  margin-bottom: 1.5rem;
+  color: var(--title-color);
+}
+
+#testimonials blockquote p span {
+  font: 700 2.5rem serif;
+  position: absolute;
+  top: -0.375rem;
+  left: -1.875rem;
+  color: var(--base-color);
+}
+
+#testimonials cite {
+  display: flex;
+  align-items: center; /*centraliza a fto e o nome*/
+  font-style: normal;
+}
+
+#testimonials cite img {
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover; /*se o objeto não couber na proporção, ela irá cobrir para se adequar*/
+  clip-path: circle();
+  /*cria uma moldura, no caso circular, para a fto em questão*/
+  margin-right: 0.5rem;
+}
+/*====  TESTIMONIALS - SWIPE  ==========================================*/
+
+.swiper-slide {
+  height: auto;
+  padding: 4rem 1rem;
+}
+.swiper-pagination-bullet {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+.swiper-pagination-bullet-active {
+  background: var(--base-color);
+}
+/*====  CONTACT  ==========================================*/
+#contact .grid {
+  gap: 4rem;
+}
+#contact .text p {
+  margin-bottom: 2rem;
+}
+
+#contact .button i,
+#contact ul li i {
+  font-size: 1.5rem;
+  margin-right: 0.625rem;
+}
+
+#contact ul.grid {
+  gap: 2rem;
+}
+
+#contact ul li {
+  display: flex;
+  align-items: center;
+}
+#contact ul li i {
+  color: var(--base-color);
+}
+/*====  FOOTER  ==========================================*/
+footer {
+  background: var(--base-color);
+}
+
+footer .section {
+  padding: 4rem 0;
+}
+
+footer .logo {
+  display: inline-block; /*quando é a, ele é inline, nesse modelo n posso colocar margem, por isso coloco como inline-block*/
+  margin-bottom: 1.5rem;
+}
+
+footer .brand p {
+  color: var(--text-color-light);
+  margin-bottom: 0.75rem;
+}
+
+footer i {
+  font-size: 1.5rem;
+  color: var(--text-color-light);
+}
+
+footer .social {
+  grid-auto-flow: column; /*disposição do grid em colunas e n em linhas*/
+  width: fit-content; /*as colunas sejam do tamanho do conteúdo*/
+}
+
+footer .social a {
+  margin-right: 2rem;
+  transition: 0.3s;
+  display: inline-block; /*tenho que mudar o display, pq o a vem padrão inline e n permite alterar*/
+}
+
+footer .social a:hover {
+  transform: translateY(-8px);
+}
+/*====  BACK TO TOP  ==========================================*/
+.back-to-top {
+  background: var(--base-color);
+  color: var(--text-color-light);
+
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+
+  padding: 0.5rem;
+  clip-path: circle();
+
+  font-size: 1.5rem;
+  line-height: 0;
+
+  visibility: hidden;
+  opacity: 0;
+
+  transition: 0.2s;
+  transform: translateY(100%);
+}
+
+.back-to-top.show {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+/*====  RESPONSIVIDADE  ==========================================*/
+
+/*extra large devices: 1200>*/
+@media (min-width: 1200px) {
+  /*  Reusable classes  */
+  .container {
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .section {
+    padding: 10rem 0;
+  }
+
+  .section header,
+  #testimonials header {
+    max-width: 32rem;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .button {
+    height: 3.125rem;
+  }
+
+  /*  Navigation  */
+
+  nav .menu {
+    opacity: 1;
+    visibility: visible;
+    top: 0;
+  }
+
+  nav .menu ul {
+    display: flex;
+    gap: 2rem;
+  }
+
+  nav .menu ul li a.title {
+    font: 700 1rem var(--body-font);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  nav .menu ul li a.title.active {
+    font-weight: bold;
+    -webkit-font-smoothing: auto;
+  }
+
+  nav .icon-menu {
+    display: none;
+  }
+
+  /*  LAYOUT  */
+  main {
+    margin-top: var(--header-hight);
+  }
+  /*  HOME  */
+
+  #home .container {
+    grid-auto-flow: column;
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+  #home .image {
+    order: 1;
+  }
+
+  #home .text {
+    order: 0;
+    max-width: 24rem;
+    text-align: left;
+  }
+
+  /*About*/
+
+  #about .container {
+    grid-auto-flow: column;
+  }
+
+  /*Services*/
+  .cards {
+    grid-template-columns: 1fr 1fr 1fr; /*dividindo o grid em 3 e deixando em frações (fr) */
+  }
+
+  .card {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  /*Testimonials*/
+  #testimonials .container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /*Contact*/
+  #contact .container {
+    grid-auto-flow: column;
+    align-items: center;
+  }
+
+  #contact .text {
+    max-width: 25rem;
+  }
+
+  /*Footer*/
+  footer.section {
+    padding: 3.75rem 0;
+  }
+
+  footer .container {
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer .logo {
+    font-size: 2.25rem;
+  }
+}
+
+/*large devices: 1023>*/
+/*large devices: 992>*/
+@media (min-width: 992px) {
+  :root {
+    --title-font-size: 2.25rem;
+    --subtitle-font-size: 1.125rem;
+  }
+}
+
+/*medium devices: 727>*/
